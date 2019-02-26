@@ -62,7 +62,7 @@ clean:
 
 local-validate: local-validate-git local-validate-go local-validate-reproducible
 
-EPOCH_COMMIT ?= cd284b45372f452c56df31b2e105e805cdb8d55b
+EPOCH_COMMIT ?= d51616f774e691623dc40df0ae5f90c35b0e1fd0
 local-validate-git:
 	@type git-validation > /dev/null 2>/dev/null || (echo "ERROR: git-validation not found." && false)
 ifdef TRAVIS_COMMIT_RANGE
