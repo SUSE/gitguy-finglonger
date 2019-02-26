@@ -1,0 +1,6 @@
+github-project-mgr
+/bin
+/release
+/build
+coverage.txt
+config.prod.yaml

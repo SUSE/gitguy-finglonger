@@ -1,0 +1,13 @@
+---
+triagedColumnID: 0
+blockedColumnID: 0
+inProgressColumnID: 0
+progressColumnID: 0
+doneColumnID: 0
+backlogReleaseSquadColumnID: 0
+server:
+  address: ":8080"
+  readTimeout: 10
+  writeTimeout: 10
+github:
+  apiURL: "https://api.github.com"
