@@ -7,12 +7,8 @@ import (
 	"strings"
 )
 
-var (
-	secret string
-)
-
 // IsValidSignature check the signature against the secret to only allow request from github
-func IsValidSignature(body []byte, signature string) bool {
+func IsValidSignature(body []byte, signature string, secret string) bool {
 	if !strings.HasPrefix(signature, "sha1=") {
 		return false
 	}

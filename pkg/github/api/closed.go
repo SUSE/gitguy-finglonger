@@ -20,6 +20,6 @@ func (a *API) ClosedIssue(issue *model.Issue, w http.ResponseWriter) {
 		ContentID:   issue.Issue.ID,
 		ContentType: "Issue",
 	}
-	status, _ := request("POST", url, notePayload)
+	status, _ := request("POST", url, notePayload, a.Config.Github.Token)
 	w.WriteHeader(status)
 }

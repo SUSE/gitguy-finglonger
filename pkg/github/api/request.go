@@ -9,11 +9,7 @@ import (
 	"net/http"
 )
 
-var (
-	token string
-)
-
-func request(method string, url string, payload interface{}) (int, []byte) {
+func request(method string, url string, payload interface{}, token string) (int, []byte) {
 	nb, err := json.Marshal(payload)
 	if err != nil {
 		log.Fatalln(err)

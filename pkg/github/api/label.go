@@ -13,7 +13,7 @@ func (a *API) LabelActions(issue *model.Issue, w http.ResponseWriter) {
 	switch issue.Label.Name {
 	case "Blocked", "needinfo":
 		possibleColumns := []int{a.Config.InProgressColumnID}
-		notes, err := getNotesByColumns(a.Config.Github.APIURL, possibleColumns)
+		notes, err := a.getNotesByColumns(a.Config.Github.APIURL, possibleColumns)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
@@ -29,7 +29,7 @@ func (a *API) LabelActions(issue *model.Issue, w http.ResponseWriter) {
 			Position: "top",
 			ColumnID: a.Config.BlockedColumnID,
 		}
-		status, _ := request("POST", url, notePayload)
+		status, _ := request("POST", url, notePayload, a.Config.Github.Token)
 		w.WriteHeader(status)
 		return
 	case "BugSquad":
@@ -38,7 +38,7 @@ func (a *API) LabelActions(issue *model.Issue, w http.ResponseWriter) {
 			ContentID:   issue.Issue.ID,
 			ContentType: "Issue",
 		}
-		status, _ := request("POST", url, notePayload)
+		status, _ := request("POST", url, notePayload, a.Config.Github.Token)
 		w.WriteHeader(status)
 		return
 	}
@@ -49,7 +49,7 @@ func (a *API) UnlabelActions(issue *model.Issue, w http.ResponseWriter) {
 	switch issue.Label.Name {
 	case "needinfo":
 		possibleColumns := []int{a.Config.BlockedColumnID}
-		notes, err := getNotesByColumns(a.Config.Github.APIURL, possibleColumns)
+		notes, err := a.getNotesByColumns(a.Config.Github.APIURL, possibleColumns)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
@@ -65,7 +65,7 @@ func (a *API) UnlabelActions(issue *model.Issue, w http.ResponseWriter) {
 			Position: "top",
 			ColumnID: a.Config.InProgressColumnID,
 		}
-		status, _ := request("POST", url, notePayload)
+		status, _ := request("POST", url, notePayload, a.Config.Github.Token)
 		w.WriteHeader(status)
 		return
 	}
@@ -77,7 +77,7 @@ func (a *API) setLabels(issue *model.Issue, labels []string) error {
 	labelsPayload := model.LabelsPayload{
 		Labels: labels,
 	}
-	status, b := request("POST", url, labelsPayload)
+	status, b := request("POST", url, labelsPayload, a.Config.Github.Token)
 	if status != 200 {
 		return errors.New(string(b))
 	}
@@ -87,7 +87,7 @@ func (a *API) setLabels(issue *model.Issue, labels []string) error {
 // removeLabel sets a Label to the issue
 func (a *API) removeLabel(issue *model.Issue, label string) error {
 	url := fmt.Sprintf(`%s/repos/%s/%s/issues/%d/labels/%s`, a.Config.Github.APIURL, issue.Repository.Owner.Login, issue.Repository.Name, issue.Issue.Number, label)
-	status, b := request("DELETE", url, nil)
+	status, b := request("DELETE", url, nil, a.Config.Github.Token)
 	if status != 200 {
 		return errors.New(string(b))
 	}

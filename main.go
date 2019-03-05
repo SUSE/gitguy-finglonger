@@ -33,6 +33,5 @@ func main() {
 	}
 
 	a := api.NewAPI(conf)
-
 	log.Fatal(a.ListenAndServe())
 }

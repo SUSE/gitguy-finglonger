@@ -1,3 +1,5 @@
+github.com/SUSE/gitguy-finglonger v0.0.0-20190305102154-2026c28b5cc4 h1:xR/WHpjw422Wc4LX8C/VM7WG5CtHT2n9Dosf2wuSWA8=
+github.com/SUSE/gitguy-finglonger v0.0.0-20190305102154-2026c28b5cc4/go.mod h1:8i1BlUNr9fXIeJjs54MOBe/kLLRx1uRrRBg6K9m4f20=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=

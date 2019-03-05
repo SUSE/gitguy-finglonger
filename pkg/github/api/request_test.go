@@ -15,6 +15,7 @@ func Test_request(t *testing.T) {
 		method  string
 		url     string
 		payload interface{}
+		token   string
 	}
 	tests := []struct {
 		name  string
@@ -22,15 +23,15 @@ func Test_request(t *testing.T) {
 		want  int
 		want1 []byte
 	}{
-		{"1", args{"POST", "http://127.0.0.1:9898/post", nil}, 200, []byte("")},
-		{"2", args{"GET", "http://127.0.0.1:9898/get", nil}, 200, []byte("hello")},
-		{"3", args{"POST", "http://127.0.0.1:9898/asd", nil}, 404, []byte("")},
-		{"4", args{"POST", "http://127.0.0.1:9898/asd", nil}, 404, []byte("")},
-		{"5", args{"GET", "http://127.0.0.1:9898/post", nil}, 404, []byte("")},
+		{"1", args{"POST", "http://127.0.0.1:9898/post", nil, ""}, 200, []byte("")},
+		{"2", args{"GET", "http://127.0.0.1:9898/get", nil, ""}, 200, []byte("hello")},
+		{"3", args{"POST", "http://127.0.0.1:9898/asd", nil, ""}, 404, []byte("")},
+		{"4", args{"POST", "http://127.0.0.1:9898/asd", nil, ""}, 404, []byte("")},
+		{"5", args{"GET", "http://127.0.0.1:9898/post", nil, ""}, 404, []byte("")},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, got1 := request(tt.args.method, tt.args.url, tt.args.payload)
+			got, got1 := request(tt.args.method, tt.args.url, tt.args.payload, tt.args.token)
 			status := got != tt.want
 			if status {
 				t.Errorf("request() got = %v, want %v", got, tt.want)

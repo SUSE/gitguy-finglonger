@@ -21,5 +21,7 @@ type Config struct {
 	} `yaml:"server,omitempty"`
 	Github struct {
 		APIURL string `yaml:"apiURL"`
+		Token  string `yaml:"token"`
+		Secret string `yaml:"secret"`
 	} `yaml:"github,omitempty"`
 }

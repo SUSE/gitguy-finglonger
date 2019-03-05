@@ -19,9 +19,8 @@ func TestIsValidSignature(t *testing.T) {
 		{"4", args{[]byte("hello"), "sha1=9ade18f3e0ee81a5343f4a005f7", "false"}, false},
 	}
 	for _, tt := range tests {
-		secret = tt.args.secret
 		t.Run(tt.name, func(t *testing.T) {
-			if got := IsValidSignature(tt.args.body, tt.args.signature); got != tt.want {
+			if got := IsValidSignature(tt.args.body, tt.args.signature, tt.args.secret); got != tt.want {
 				t.Errorf("IsValidSignature() = %v, want %v", got, tt.want)
 			}
 		})

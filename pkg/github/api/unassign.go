@@ -13,7 +13,7 @@ func (a *API) MoveIssueBlocked(issue *model.Issue, w http.ResponseWriter) {
 		return
 	}
 	possibleColumns := []int{a.Config.InProgressColumnID}
-	notes, err := getNotesByColumns(a.Config.Github.APIURL, possibleColumns)
+	notes, err := a.getNotesByColumns(a.Config.Github.APIURL, possibleColumns)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -29,7 +29,7 @@ func (a *API) MoveIssueBlocked(issue *model.Issue, w http.ResponseWriter) {
 		Position: "top",
 		ColumnID: a.Config.BlockedColumnID,
 	}
-	status, _ := request("POST", url, notePayload)
+	status, _ := request("POST", url, notePayload, a.Config.Github.Token)
 	w.WriteHeader(status)
 	return
 }
