@@ -1,4 +1,4 @@
-FROM opensuse/tumbleweed
+FROM opensuse/leap:15
 
 LABEL Maintainer="SUSE Containers Team <containers@suse.com>"
 
