@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/chentex/github-project-mgr/pkg/config"
-	"github.com/chentex/github-project-mgr/pkg/github/model"
+	"github.com/SUSE/gitguy-finglonger/pkg/config"
+	"github.com/SUSE/gitguy-finglonger/pkg/github/model"
 )
 
 // Interface definition of the API
@@ -15,6 +15,8 @@ type Interface interface {
 	LabelActions(issue *model.Issue, w http.ResponseWriter)
 	UnlabelActions(issue *model.Issue, w http.ResponseWriter)
 	MoveIssueBlocked(issue *model.Issue, w http.ResponseWriter)
+	Review(pr *model.PullRequest, w http.ResponseWriter)
+	SubmitReview(pr *model.PullRequestReview, w http.ResponseWriter)
 	ListenAndServe() error
 }
 
@@ -38,6 +40,8 @@ func NewAPI(c *config.Config) Interface {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/v0/issue", a.IssueHandler)
 	mux.HandleFunc("/v0/version", a.VersionHandler)
+	mux.HandleFunc("/v0/comments", a.CommentHandler)
+	mux.HandleFunc("/v0/pr", a.PullRequestHandler)
 	a.HTTPServer.Handler = mux
 	return a
 }

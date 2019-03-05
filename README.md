@@ -1,30 +1,30 @@
-# github-project-mgr
+# gitguy-finglonger
 
-[![Release](https://img.shields.io/github/release/chentex/github-project-mgr.svg)](https://github.com/chentex/github-project-mgr/releases/latest)
-[![Build Status](https://img.shields.io/travis/chentex/github-project-mgr/master.svg)](https://travis-ci.org/chentex/github-project-mgr)
-[![codecov](https://codecov.io/gh/chentex/github-project-mgr/branch/master/graph/badge.svg)](https://codecov.io/gh/chentex/github-project-mgr)
+[![Release](https://img.shields.io/github/release/SUSE/gitguy-finglonger.svg)](https://github.com/SUSE/gitguy-finglonger/releases/latest)
+[![Build Status](https://img.shields.io/travis/SUSE/gitguy-finglonger/master.svg)](https://travis-ci.org/SUSE/gitguy-finglonger)
+[![codecov](https://codecov.io/gh/SUSE/gitguy-finglonger/branch/master/graph/badge.svg)](https://codecov.io/gh/SUSE/gitguy-finglonger)
 
-![License: Apache 2.0](https://img.shields.io/github/license/chentex/github-project-mgr.svg)
-[![Go Report Card](https://goreportcard.com/badge/github.com/chentex/github-project-mgr)](https://goreportcard.com/report/github.com/chentex/github-project-mgr)
+![License: Apache 2.0](https://img.shields.io/github/license/SUSE/gitguy-finglonger.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/SUSE/gitguy-finglonger)](https://goreportcard.com/report/github.com/SUSE/gitguy-finglonger)
 
 Manage your github project automatically, reacting to actions on your issues and labeling actions
 
 ## Install
 
-Download the latest version from [releases](https://github.com/chentex/github-project-mgr/releases/latest).
+Download the latest version from [releases](https://github.com/SUSE/gitguy-finglonger/releases/latest).
 
 ## Test
 
 Clone repository into your $GOPATH. You can also use go get:
 
-`go get github.com/chentex/github-project-mgr`
+`go get github.com/SUSE/gitguy-finglonger`
 
 ### Dependencies
 
 * `go >= 1.11`
 
 Note:
-We use golang modules but you still need to work inside your $GOPATH for developing `github-project-mgr`.
+We use golang modules but you still need to work inside your $GOPATH for developing `gitguy-finglonger`.
 Working outside GOPATH is currently **not supported**
 
 ### Running tests
@@ -48,7 +48,7 @@ Feel free to read more about this on: https://blog.golang.org/cover.
 Be sure you have all prerequisites.
 
 A simple `make` should be enough. This should compile [the main
-function](main.go) and generate a `github-project-mgr` binary.
+function](main.go) and generate a `gitguy-finglonger` binary.
 
 Your binary will be stored under `bin` folder
 

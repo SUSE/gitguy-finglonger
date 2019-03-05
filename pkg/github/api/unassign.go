@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/chentex/github-project-mgr/pkg/github/model"
+	"github.com/SUSE/gitguy-finglonger/pkg/github/model"
 )
 
 // MoveIssueBlocked when an issue has been unassigned completely

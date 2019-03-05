@@ -3,11 +3,11 @@ GO ?= GO111MODULE=off go
 GO_MD2MAN ?= go-md2man
 
 # Paths.
-PROJECT := github.com/chentex/github-project-mgr
+PROJECT := github.com/SUSE/gitguy-finglonger
 CMD := .
 
 # We use Docker because Go is just horrific to deal with.
-GITHUBHOOK_IMAGE := github-project-mgr_dev
+GITHUBHOOK_IMAGE := gitguy-finglonger_dev
 DOCKER_RUN := docker run --rm -it --security-opt apparmor:unconfined --security-opt label:disable -v ${PWD}:/go/src/${PROJECT}
 
 # Output directory.
@@ -38,16 +38,16 @@ DYN_BUILD_FLAGS := ${BASE_FLAGS} -buildmode=pie -ldflags "${BASE_LDFLAGS}"
 TEST_BUILD_FLAGS := ${BASE_FLAGS} -buildmode=pie -ldflags "${BASE_LDFLAGS} -X ${PROJECT}/pkg/testutils.binaryType=test"
 STATIC_BUILD_FLAGS := ${BASE_FLAGS} -ldflags "${BASE_LDFLAGS} -extldflags '-static'"
 
-.DEFAULT: github-project-mgr
+.DEFAULT: gitguy-finglonger
 
 GO_SRC = $(shell find . -name \*.go)
 
 # NOTE: If you change these make sure you also update local-validate-build.
 
-github-project-mgr: $(GO_SRC)
+gitguy-finglonger: $(GO_SRC)
 	$(GO) build ${DYN_BUILD_FLAGS} -o $(BUILD_DIR)/$@ ${CMD}
 
-github-project-mgr.static: $(GO_SRC)
+gitguy-finglonger.static: $(GO_SRC)
 	env CGO_ENABLED=0 $(GO) build ${STATIC_BUILD_FLAGS} -o $(BUILD_DIR)/$@ ${CMD}
 
 install: $(GO_SRC)
@@ -83,13 +83,13 @@ local-validate-go:
 # the modified time of the files is different.
 local-validate-reproducible:
 	mkdir -p .tmp-validate
-	make -B github-project-mgr && cp $(BUILD_DIR)/github-project-mgr .tmp-validate/github-project-mgr.a
+	make -B gitguy-finglonger && cp $(BUILD_DIR)/gitguy-finglonger .tmp-validate/gitguy-finglonger.a
 	@echo sleep 10s
 	@sleep 10s && touch $(GO_SRC)
-	make -B github-project-mgr && cp $(BUILD_DIR)/github-project-mgr .tmp-validate/github-project-mgr.b
-	diff -s .tmp-validate/github-project-mgr.{a,b}
-	sha256sum .tmp-validate/github-project-mgr.{a,b}
-	rm -r .tmp-validate/github-project-mgr.{a,b}
+	make -B gitguy-finglonger && cp $(BUILD_DIR)/gitguy-finglonger .tmp-validate/gitguy-finglonger.b
+	diff -s .tmp-validate/gitguy-finglonger.{a,b}
+	sha256sum .tmp-validate/gitguy-finglonger.{a,b}
+	rm -r .tmp-validate/gitguy-finglonger.{a,b}
 
 local-validate-build:
 	$(GO) build ${DYN_BUILD_FLAGS} -o /dev/null ${CMD}
@@ -99,15 +99,15 @@ local-validate-build:
 # Used for tests.
 DOCKER_IMAGE :=kubic-project/amd64:tumbleweed
 
-github-project-mgr-image:
+gitguy-finglonger-image:
 	docker build -t $(GITHUBHOOK_IMAGE) .
 
 
-test.unit: github-project-mgr-image
+test.unit: gitguy-finglonger-image
 	$(DOCKER_RUN) $(GITHUBHOOK_IMAGE) make test
 
 test: local-validate-go
-	rm -rf /tmp/github-project-mgr
+	rm -rf /tmp/gitguy-finglonger
 	$(GO) test -v ./...
 
 cover:
@@ -115,23 +115,23 @@ cover:
 
 dist: export COPYFILE_DISABLE=1 #teach OSX tar to not put ._* files in tar archive
 dist:
-	rm -rf build/github-project-mgr/* release/*
-	mkdir -p build/github-project-mgr/bin release/
-	cp README.md LICENSE build/github-project-mgr
-	GOOS=linux GOARCH=amd64 go build -o build/github-project-mgr/bin/github-project-mgr -ldflags="$(BASE_LDFLAGS)"
-	tar -C build/ -zcvf $(CURDIR)/release/github-project-mgr-linux.tgz github-project-mgr/
-	GOOS=darwin GOARCH=amd64 go build -o build/github-project-mgr/bin/github-project-mgr -ldflags="$(BASE_LDFLAGS)"
-	tar -C build/ -zcvf $(CURDIR)/release/github-project-mgr-macos.tgz github-project-mgr/
-	rm build/github-project-mgr/bin/github-project-mgr
+	rm -rf build/gitguy-finglonger/* release/*
+	mkdir -p build/gitguy-finglonger/bin release/
+	cp README.md LICENSE build/gitguy-finglonger
+	GOOS=linux GOARCH=amd64 go build -o build/gitguy-finglonger/bin/gitguy-finglonger -ldflags="$(BASE_LDFLAGS)"
+	tar -C build/ -zcvf $(CURDIR)/release/gitguy-finglonger-linux.tgz gitguy-finglonger/
+	GOOS=darwin GOARCH=amd64 go build -o build/gitguy-finglonger/bin/gitguy-finglonger -ldflags="$(BASE_LDFLAGS)"
+	tar -C build/ -zcvf $(CURDIR)/release/gitguy-finglonger-macos.tgz gitguy-finglonger/
+	rm build/gitguy-finglonger/bin/gitguy-finglonger
 
 release: dist
 ifndef GITHUB_TOKEN
 	$(error GITHUB_TOKEN is undefined)
 endif
-	github-release release -u kubic-project -r github-project-mgr --tag $(VERSION)  --name $(VERSION) -s $(GITHUB_TOKEN) -d "$(CHANGE)"
-	github-release upload -u kubic-project -r github-project-mgr --tag $(VERSION)  --name github-project-mgr-linux.tgz --file release/github-project-mgr-linux.tgz -s $(GITHUB_TOKEN)
-	github-release upload -u kubic-project -r github-project-mgr --tag $(VERSION)  --name github-project-mgr-macos.tgz --file release/github-project-mgr-macos.tgz -s $(GITHUB_TOKEN)
-	github-release upload -u kubic-project -r github-project-mgr --tag $(VERSION)  --name github-project-mgr-windows.tgz --file release/github-project-mgr-windows.tgz -s $(GITHUB_TOKEN)
+	github-release release -u kubic-project -r gitguy-finglonger --tag $(VERSION)  --name $(VERSION) -s $(GITHUB_TOKEN) -d "$(CHANGE)"
+	github-release upload -u kubic-project -r gitguy-finglonger --tag $(VERSION)  --name gitguy-finglonger-linux.tgz --file release/gitguy-finglonger-linux.tgz -s $(GITHUB_TOKEN)
+	github-release upload -u kubic-project -r gitguy-finglonger --tag $(VERSION)  --name gitguy-finglonger-macos.tgz --file release/gitguy-finglonger-macos.tgz -s $(GITHUB_TOKEN)
+	github-release upload -u kubic-project -r gitguy-finglonger --tag $(VERSION)  --name gitguy-finglonger-windows.tgz --file release/gitguy-finglonger-windows.tgz -s $(GITHUB_TOKEN)
 
 MANPAGES_MD := $(wildcard doc/man/*.md)
 MANPAGES    := $(MANPAGES_MD:%.md=%)
@@ -143,8 +143,8 @@ doc/man/%.1: doc/man/%.1.md
 
 doc: $(MANPAGES)
 
-.PHONY: github-project-mgr \
-	github-project-mgr.static \
+.PHONY: gitguy-finglonger \
+	gitguy-finglonger.static \
 	install \
 	install.static \
 	clean \
@@ -153,7 +153,7 @@ doc: $(MANPAGES)
 	local-validate-go \
 	local-validate-reproducible \
 	local-validate-build \
-	github-project-mgr-image \
+	gitguy-finglonger-image \
 	test.unit
 	test \
 	cover \

@@ -9,7 +9,7 @@ import (
 	"path"
 	"strconv"
 
-	"github.com/chentex/github-project-mgr/pkg/github/model"
+	"github.com/SUSE/gitguy-finglonger/pkg/github/model"
 )
 
 func getNotesByColumns(api string, columns []int) ([]model.NoteInColumns, error) {

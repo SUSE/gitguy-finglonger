@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/chentex/github-project-mgr/pkg/github/model"
+	"github.com/SUSE/gitguy-finglonger/pkg/github/model"
 )
 
 // MoveIssueInProgress when an issue has been assigned to someone

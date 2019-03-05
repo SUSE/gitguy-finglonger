@@ -3,15 +3,14 @@ package api
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 
 	"github.com/SUSE/gitguy-finglonger/pkg/github/model"
 	"github.com/SUSE/gitguy-finglonger/pkg/security"
 )
 
-// IssueHandler handles webhooks events from issues in github
-func (a *API) IssueHandler(w http.ResponseWriter, r *http.Request) {
+// CommentHandler handles webhooks events from comments in github issues/PR
+func (a *API) CommentHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		w.WriteHeader(http.StatusNotFound)
 		return
@@ -26,20 +25,6 @@ func (a *API) IssueHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
 	}
-	issue := new(model.Issue)
-	json.Unmarshal(body, issue)
-	log.Printf("process action: %s", issue.Action)
-
-	switch issue.Action {
-	case "labeled":
-		a.LabelActions(issue, w)
-	case "unlabeled":
-		a.UnlabelActions(issue, w)
-	case "assigned":
-		a.MoveIssueInProgress(issue, w)
-	case "unassigned":
-		a.MoveIssueBlocked(issue, w)
-	case "closed":
-		a.ClosedIssue(issue, w)
-	}
+	comment := new(model.Comment)
+	json.Unmarshal(body, comment)
 }
