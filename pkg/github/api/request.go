@@ -21,7 +21,7 @@ func request(method string, url string, payload interface{}, token string) (int,
 	client := http.DefaultClient
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Printf("request error: %s - %d - %s", resp.Status, resp.StatusCode, err)
+		log.Printf("request error: %d - %s", resp.StatusCode, err.Error())
 		log.Fatalln(err)
 		return resp.StatusCode, nil
 	}
@@ -30,6 +30,6 @@ func request(method string, url string, payload interface{}, token string) (int,
 		log.Printf("read respose Body: %s", err)
 		return http.StatusInternalServerError, nil
 	}
-	log.Printf("request %s status: %s - %d", url, resp.Status, resp.StatusCode)
+	log.Printf("request %s status: %d", url, resp.StatusCode)
 	return resp.StatusCode, bd
 }
