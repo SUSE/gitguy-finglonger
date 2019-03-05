@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"reflect"
@@ -41,7 +42,7 @@ func Test_request(t *testing.T) {
 			}
 		})
 	}
-	if err := svr.Shutdown(nil); err != nil {
+	if err := svr.Shutdown(context.Background()); err != nil {
 		t.Errorf("error stoping down web server")
 	}
 }
