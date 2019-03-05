@@ -21,9 +21,9 @@ func request(method string, url string, payload interface{}, token string) (int,
 	client := http.DefaultClient
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Printf("request error: %d - %s", resp.StatusCode, err.Error())
+		log.Printf("request error: %s", err.Error())
 		log.Fatalln(err)
-		return resp.StatusCode, nil
+		return http.StatusFailedDependency, nil
 	}
 	bd, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

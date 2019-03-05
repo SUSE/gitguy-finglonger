@@ -1,4 +1,4 @@
-FROM opensuse/amd64:42.3
+FROM opensuse/tumbleweed
 
 LABEL Maintainer="SUSE Containers Team <containers@suse.com>"
 
