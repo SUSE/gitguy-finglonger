@@ -15,6 +15,6 @@ RUN zypper -n up && \
 	go get -u golang.org/x/lint/golint && \
 	go get -u github.com/vbatts/git-validation && type git-validation
 
-VOLUME ["/go/src/github.com/chentex/github-project-mgr"]
-WORKDIR /go/src/github.com/chentex/github-project-mgr
-COPY . /go/src/github.com/chentex/github-project-mgr
+VOLUME ["/go/src/github.com/SUSE/gitguy-finglonger"]
+WORKDIR /go/src/github.com/SUSE/gitguy-finglonger
+COPY . /go/src/github.com/SUSE/gitguy-finglonger

@@ -7,8 +7,8 @@ import (
 
 	"gopkg.in/yaml.v2"
 
-	"github.com/chentex/github-project-mgr/pkg/config"
-	"github.com/chentex/github-project-mgr/pkg/github/api"
+	"github.com/SUSE/gitguy-finglonger/pkg/config"
+	"github.com/SUSE/gitguy-finglonger/pkg/github/api"
 )
 
 var (

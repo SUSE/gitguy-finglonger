@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/chentex/github-project-mgr/pkg/github/model"
+	"github.com/SUSE/gitguy-finglonger/pkg/github/model"
 )
 
 // LabelActions moves an issue in the project to a columns depending on the label that has been set.

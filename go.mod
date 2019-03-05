@@ -1,4 +1,4 @@
-module github.com/chentex/github-project-mgr
+module github.com/SUSE/gitguy-finglonger
 
 require (
 	github.com/kr/pretty v0.1.0 // indirect
