@@ -31,8 +31,6 @@ BUILD_FLAGS ?=
 BASE_FLAGS := ${BUILD_FLAGS} -tags "${BUILDTAGS}"
 
 BASE_LDFLAGS := -X $(PROJECT)/pkg/github/api.version=$(VERSION)
-BASE_LDFLAGS += -X $(PROJECT)/pkg/github/api.token=$(SECURITY_TOKEN)
-BASE_LDFLAGS += -X $(PROJECT)/pkg/security.secret=$(SECRET_TOKEN)
 
 DYN_BUILD_FLAGS := ${BASE_FLAGS} -buildmode=pie -ldflags "${BASE_LDFLAGS}"
 TEST_BUILD_FLAGS := ${BASE_FLAGS} -buildmode=pie -ldflags "${BASE_LDFLAGS} -X ${PROJECT}/pkg/testutils.binaryType=test"

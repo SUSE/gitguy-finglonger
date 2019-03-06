@@ -12,7 +12,7 @@ func (a *API) MoveIssueInProgress(issue *model.Issue, w http.ResponseWriter) {
 	switch len(issue.Issue.Assignees) > 1 {
 	case false:
 		possibleColumns := []int{a.Config.TriagedColumnID, a.Config.BlockedColumnID}
-		notes, err := getNotesByColumns(a.Config.Github.APIURL, possibleColumns)
+		notes, err := a.getNotesByColumns(a.Config.Github.APIURL, possibleColumns)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
@@ -29,7 +29,7 @@ func (a *API) MoveIssueInProgress(issue *model.Issue, w http.ResponseWriter) {
 			Position: "top",
 			ColumnID: a.Config.InProgressColumnID,
 		}
-		status, _ := request("POST", url, notePayload)
+		status, _ := request("POST", url, notePayload, a.Config.Github.Token)
 		w.WriteHeader(status)
 	case true:
 		err := a.checkLabels(issue)

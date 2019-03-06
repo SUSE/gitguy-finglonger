@@ -15,7 +15,7 @@ func (a *API) Review(pr *model.PullRequest, w http.ResponseWriter) {
 		Body:  "## Release Coordination Checklist \r\n\r\n- [ ] item 1\r\n- [ ] item 2\r\n- [ ] item 3",
 		Event: "REQUEST_CHANGES",
 	}
-	status, _ := request("POST", url, commentPayload)
+	status, _ := request("POST", url, commentPayload, a.Config.Github.Token)
 	w.WriteHeader(status)
 }
 
@@ -27,7 +27,7 @@ func (a *API) SubmitReview(r *model.PullRequestReview, w http.ResponseWriter) {
 			Body:  "LGTM",
 			Event: "APPROVE",
 		}
-		status, _ := request("POST", url, commentPayload)
+		status, _ := request("POST", url, commentPayload, a.Config.Github.Token)
 		w.WriteHeader(status)
 	}
 }

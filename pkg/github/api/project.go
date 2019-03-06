@@ -12,11 +12,11 @@ import (
 	"github.com/SUSE/gitguy-finglonger/pkg/github/model"
 )
 
-func getNotesByColumns(api string, columns []int) ([]model.NoteInColumns, error) {
+func (a *API) getNotesByColumns(api string, columns []int) ([]model.NoteInColumns, error) {
 	notes := []model.NoteInColumns{}
 	for _, c := range columns {
 		url := fmt.Sprintf(`%s/projects/columns/%d/cards`, api, c)
-		status, bd := request("GET", url, nil)
+		status, bd := request("GET", url, nil, a.Config.Github.Token)
 		if status != 200 {
 			return nil, errors.New("failed request")
 		}

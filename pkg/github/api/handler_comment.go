@@ -21,7 +21,7 @@ func (a *API) CommentHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	signature := r.Header.Get("X-Hub-Signature")
-	if !security.IsValidSignature(body, signature) {
+	if !security.IsValidSignature(body, signature, a.Config.Github.Secret) {
 		http.Error(w, "Bad Request", http.StatusBadRequest)
 		return
 	}

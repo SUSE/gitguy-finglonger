@@ -6,8 +6,10 @@ progressColumnID: 0
 doneColumnID: 0
 backlogReleaseSquadColumnID: 0
 server:
-  address: ":8080"
+  address: ":8191"
   readTimeout: 10
   writeTimeout: 10
 github:
   apiURL: "https://api.github.com"
+  token: ""
+  secret: ""
